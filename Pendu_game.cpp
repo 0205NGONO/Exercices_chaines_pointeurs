@@ -10,6 +10,7 @@ int longueur(const char *chaine) ;
 char to_upper(char letter) ;
 void affiche_mot(const char *mot) ;
 char to_lower(char letter) ;
+void afficherPendu(int etape) ;
 
 
 int main(int argc, char const *argv[])
@@ -19,7 +20,7 @@ int main(int argc, char const *argv[])
         string mot;
         char letter ;
         bool view_letters[26] = {false};// Tableau pour suivre les lettres déjà trouvées
-        int essai = 0 , letters_found = 0;
+        int essai = 0 , letters_found = 0 , max_erreur = 10 ;
 
         cout <<"Quel est le mot à deviner ?\n" ;
         cin >> mot ;
@@ -33,7 +34,7 @@ int main(int argc, char const *argv[])
         cout <<"Retrouvez le mot caché !\n" ;
         /*Le je continue tant que le nombre d'essais nuls est inférieur au nombre de chance
         Le nombre de chence ici c'est le nombre de lettres distinctes du mot*/
-        while (essai < distinct_letters(mot.c_str()) )
+        while (essai < max_erreur) 
         {
             affichage(mot.c_str() , view_letters) ;
 
@@ -60,11 +61,8 @@ int main(int argc, char const *argv[])
                     }else{
                         /*Si la lettre entrée ne se trouve pas dans le mot,
                         c'est un essai perdu et on affiche un dessin*/
-                        cout << "Error \n Plus que " << distinct_letters(mot.c_str()) - essai - 1 << "\t essais.\n" ;
-                        for (int i = 0; i < essai + 1; i++)
-                        {
-                            cout << "/\n" ;
-                        }
+                        cout << "Error \n Plus que " << max_erreur - essai - 1 << "\t essais.\n" ;
+                        afficherPendu(essai) ;
                         essai = essai + 1 ;
                     }
                 }else{
@@ -84,12 +82,9 @@ int main(int argc, char const *argv[])
         /*Cas où le joueur a épuisé son nombre de chances 
         Arrêt du jeu
         et affichage d mot en entier*/
-        if (essai == distinct_letters(mot.c_str()) )
+        if (essai == max_erreur) 
         {
-            for (int i = 0; i < essai; i++)
-                {
-                    cout << "/\n" ;
-                }
+            afficherPendu(essai) ;
             cout << "Vous avez perdu !\n Le mot était :\t" ;
             affiche_mot(mot.c_str()) ;
             cout << "\n" ;
@@ -181,4 +176,99 @@ void affiche_mot(const char *mot){
         cout << to_upper(mot[i]);
     }
     
+}
+
+void afficherPendu(int etape) {
+    switch (etape) {
+        case 0:
+            std::cout << "  --------  \n";
+            std::cout << "  |      |  \n";
+            std::cout << "  |          \n"; // Vide
+            std::cout << "  |          \n";
+            std::cout << "  |          \n";
+            std::cout << "  |          \n";
+            std::cout << "__|__        \n";
+            break;
+        case 1:
+            std::cout << "  --------  \n";
+            std::cout << "  |      |  \n";
+            std::cout << "  |      O  \n"; // Tête
+            std::cout << "  |          \n";
+            std::cout << "  |          \n";
+            std::cout << "  |          \n";
+            std::cout << "__|__        \n";
+            break;
+        case 2:
+            std::cout << "  --------  \n";
+            std::cout << "  |      |  \n";
+            std::cout << "  |      O  \n"; // Tête
+            std::cout << "  |      |  \n"; // Bras gauche
+            std::cout << "  |          \n";
+            std::cout << "  |          \n";
+            std::cout << "__|__        \n";
+            break;
+        case 3:
+            std::cout << "  --------  \n";
+            std::cout << "  |      |  \n";
+            std::cout << "  |      O  \n"; // Tête
+            std::cout << "  |     /|  \n"; // Bras droit
+            std::cout << "  |          \n";
+            std::cout << "  |          \n";
+            std::cout << "__|__        \n";
+            break;
+        case 4:
+            std::cout << "  --------  \n";
+            std::cout << "  |      |  \n";
+            std::cout << "  |      O  \n"; // Tête
+            std::cout << "  |     /|\\ \n"; // Bras
+            std::cout << "  |          \n";
+            std::cout << "  |          \n";
+            std::cout << "__|__        \n";
+            break;
+        case 5:
+            std::cout << "  --------  \n";
+            std::cout << "  |      |  \n";
+            std::cout << "  |      O  \n"; // Tête
+            std::cout << "  |     /|\\ \n"; // Bras
+            std::cout << "  |     /   \n"; // Jambes partielles
+            std::cout << "  |          \n";
+            std::cout << "__|__        \n";
+            break;
+        case 6:
+            std::cout << "  --------  \n";
+            std::cout << "  |      |  \n";
+            std::cout << "  |      O  \n"; // Tête
+            std::cout << "  |     /|\\ \n"; // Bras
+            std::cout << "  |     / \\ \n"; // Jambes
+            std::cout << "  |          \n";
+            std::cout << "__|__        \n";
+            break;
+        case 7:
+            std::cout << "  --------  \n";
+            std::cout << "  |      |  \n";
+            std::cout << "  |      O  \n"; // Tête
+            std::cout << "  |     /|\\ \n"; // Bras
+            std::cout << "  |     / \\ \n"; // Jambes
+            std::cout << "  |          \n";
+            std::cout << "__|__        \n";
+            break;
+        case 8:
+            std::cout << "  --------  \n";
+            std::cout << "  |      |  \n";
+            std::cout << "  |      O  \n"; // Tête
+            std::cout << "  |     /|\\ \n"; // Bras
+            std::cout << "  |     / \\ \n"; // Jambes
+            std::cout << "  |          \n";
+            std::cout << "__|__        \n";
+            break;
+        case 9:
+            std::cout << "  --------  \n";
+            std::cout << "  |      |  \n";
+            std::cout << "  |      O  \n"; // Tête
+            std::cout << "  |     /|\\ \n"; // Bras
+            std::cout << "  |     / \\ \n"; // Jambes
+            std::cout << "  |   [FIN]  \n"; // État final
+            std::cout << "__|__        \n";
+            break;
+    }
 }
